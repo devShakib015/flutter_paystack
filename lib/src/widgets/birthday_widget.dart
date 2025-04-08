@@ -32,28 +32,33 @@ class _BirthdayWidgetState extends BaseState<BirthdayWidget> {
   @override
   Widget buildChild(BuildContext context) {
     return new CustomAlertDialog(
-        content: new SingleChildScrollView(
-      child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
-        child: new Column(
-          children: <Widget>[
-            new Image.asset('assets/images/dob.png',
-                width: 30.0, package: 'flutter_paystack'),
-            _heightBox,
-            new Text(
-              widget.message,
-              textAlign: TextAlign.center,
-              style: TextStyle(
-                fontWeight: FontWeight.w500,
-                color: context.textTheme().headline6?.color,
-                fontSize: 15.0,
+      content: new SingleChildScrollView(
+        child: Container(
+          padding: const EdgeInsets.symmetric(vertical: 10.0, horizontal: 20.0),
+          child: new Column(
+            children: <Widget>[
+              new Image.asset(
+                'assets/images/dob.png',
+                width: 30.0,
+                package: 'flutter_paystack',
               ),
-            ),
-            _heightBox,
-            _pickedDate == null
-                ? new WhiteButton(
-                    onPressed: _selectBirthday, text: 'Pick birthday')
-                : new WhiteButton(
+              _heightBox,
+              new Text(
+                widget.message,
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontWeight: FontWeight.w500,
+                  color: context.textTheme().headlineLarge?.color,
+                  fontSize: 15.0,
+                ),
+              ),
+              _heightBox,
+              _pickedDate == null
+                  ? new WhiteButton(
+                    onPressed: _selectBirthday,
+                    text: 'Pick birthday',
+                  )
+                  : new WhiteButton(
                     onPressed: _selectBirthday,
                     flat: true,
                     child: new Row(
@@ -62,30 +67,33 @@ class _BirthdayWidgetState extends BaseState<BirthdayWidget> {
                       children: <Widget>[
                         new Flexible(flex: 4, child: dateItem(_getMonth())),
                         new Flexible(flex: 2, child: dateItem(_getDay())),
-                        new Flexible(flex: 3, child: dateItem(_getYear()))
+                        new Flexible(flex: 3, child: dateItem(_getYear())),
                       ],
                     ),
                   ),
-            new SizedBox(
-              height: _pickedDate == null ? 5.0 : 20.0,
-            ),
-            _pickedDate == null
-                ? new Container()
-                : new AccentButton(onPressed: _onAuthorize, text: 'Authorize'),
-            new Container(
-              padding:
-                  new EdgeInsets.only(top: _pickedDate == null ? 15.0 : 20.0),
-              child: new WhiteButton(
-                onPressed: onCancelPress,
-                text: 'Cancel',
-                flat: true,
-                bold: true,
+              new SizedBox(height: _pickedDate == null ? 5.0 : 20.0),
+              _pickedDate == null
+                  ? new Container()
+                  : new AccentButton(
+                    onPressed: _onAuthorize,
+                    text: 'Authorize',
+                  ),
+              new Container(
+                padding: new EdgeInsets.only(
+                  top: _pickedDate == null ? 15.0 : 20.0,
+                ),
+                child: new WhiteButton(
+                  onPressed: onCancelPress,
+                  text: 'Cancel',
+                  flat: true,
+                  bold: true,
+                ),
               ),
-            ),
-          ],
+            ],
+          ),
         ),
       ),
-    ));
+    );
   }
 
   void _selectBirthday() async {
@@ -97,43 +105,49 @@ class _BirthdayWidgetState extends BaseState<BirthdayWidget> {
     var minimumYear = 1900;
     if (Platform.isIOS) {
       showCupertinoModalPopup<void>(
-          context: context,
-          builder: (BuildContext context) => Container(
-                height: _kPickerSheetHeight,
-                padding: const EdgeInsets.only(top: 6.0),
-                color: CupertinoColors.white,
-                child: DefaultTextStyle(
-                  style: const TextStyle(
-                    color: CupertinoColors.black,
-                    fontSize: 22.0,
-                  ),
-                  child: GestureDetector(
-                    // Blocks taps from propagating to the modal sheet and popping.
-                    onTap: () {},
-                    child: SafeArea(
-                      top: false,
-                      child: new CupertinoDatePicker(
-                        mode: CupertinoDatePickerMode.date,
-                        initialDateTime: now,
-                        maximumDate: now,
-                        minimumYear: minimumYear,
-                        maximumYear: now.year,
-                        onDateTimeChanged: updateDate,
-                      ),
+        context: context,
+        builder:
+            (BuildContext context) => Container(
+              height: _kPickerSheetHeight,
+              padding: const EdgeInsets.only(top: 6.0),
+              color: CupertinoColors.white,
+              child: DefaultTextStyle(
+                style: const TextStyle(
+                  color: CupertinoColors.black,
+                  fontSize: 22.0,
+                ),
+                child: GestureDetector(
+                  // Blocks taps from propagating to the modal sheet and popping.
+                  onTap: () {},
+                  child: SafeArea(
+                    top: false,
+                    child: new CupertinoDatePicker(
+                      mode: CupertinoDatePickerMode.date,
+                      initialDateTime: now,
+                      maximumDate: now,
+                      minimumYear: minimumYear,
+                      maximumYear: now.year,
+                      onDateTimeChanged: updateDate,
                     ),
                   ),
                 ),
-              ));
+              ),
+            ),
+      );
     } else {
       DateTime? result = await showDatePicker(
-          context: context,
-          selectableDayPredicate: (DateTime val) =>
-              val.year > now.year && val.month > now.month && val.day > now.day
-                  ? false
-                  : true,
-          initialDate: now,
-          firstDate: new DateTime(minimumYear),
-          lastDate: now);
+        context: context,
+        selectableDayPredicate:
+            (DateTime val) =>
+                val.year > now.year &&
+                        val.month > now.month &&
+                        val.day > now.day
+                    ? false
+                    : true,
+        initialDate: now,
+        firstDate: new DateTime(minimumYear),
+        lastDate: now,
+      );
 
       updateDate(result);
     }
@@ -146,10 +160,10 @@ class _BirthdayWidgetState extends BaseState<BirthdayWidget> {
       margin: const EdgeInsets.symmetric(horizontal: 2.0),
       padding: const EdgeInsets.symmetric(horizontal: 15.0, vertical: 10.0),
       decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: const BorderRadius.all(const Radius.circular(3.0)),
-          border:
-              const Border(top: side, right: side, bottom: side, left: side)),
+        color: Colors.white,
+        borderRadius: const BorderRadius.all(const Radius.circular(3.0)),
+        border: const Border(top: side, right: side, bottom: side, left: side),
+      ),
       child: new Text(
         text,
         textAlign: TextAlign.center,

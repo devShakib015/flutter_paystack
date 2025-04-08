@@ -34,15 +34,18 @@ class _OtpWidgetState extends BaseState<OtpWidget> {
               mainAxisSize: MainAxisSize.min,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: <Widget>[
-                new Image.asset('assets/images/otp.png',
-                    width: 30.0, package: 'flutter_paystack'),
+                new Image.asset(
+                  'assets/images/otp.png',
+                  width: 30.0,
+                  package: 'flutter_paystack',
+                ),
                 heightBox,
                 new Text(
                   widget.message!,
                   textAlign: TextAlign.center,
-                  style:  TextStyle(
+                  style: TextStyle(
                     fontWeight: FontWeight.w500,
-                    color: context.textTheme().headline6?.color,
+                    color: context.textTheme().headlineLarge?.color,
                     fontSize: 15.0,
                   ),
                 ),
@@ -55,10 +58,7 @@ class _OtpWidgetState extends BaseState<OtpWidget> {
                   ),
                 ),
                 heightBox,
-                new AccentButton(
-                  onPressed: _validateInputs,
-                  text: 'Authorize',
-                ),
+                new AccentButton(onPressed: _validateInputs, text: 'Authorize'),
                 heightBox,
                 new WhiteButton(
                   onPressed: onCancelPress,

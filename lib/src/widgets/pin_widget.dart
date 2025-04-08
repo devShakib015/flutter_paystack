@@ -38,13 +38,14 @@ class _PinWidgetState extends BaseState<PinWidget> {
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   fontWeight: FontWeight.w500,
-                  color: context.textTheme().headline6?.color,
+                  color: context.textTheme().headlineLarge?.color,
                   fontSize: 15.0,
                 ),
               ),
               heightBox,
               new PinField(
-                  onSaved: (String pin) => Navigator.of(context).pop(pin)),
+                onSaved: (String pin) => Navigator.of(context).pop(pin),
+              ),
               heightBox,
               new WhiteButton(
                 onPressed: onCancelPress,
@@ -60,25 +61,25 @@ class _PinWidgetState extends BaseState<PinWidget> {
   }
 
   Widget buildStar() {
-    Icon star(Color color) => new Icon(
-          Icons.star,
-          color: color,
-          size: 12.0,
-        );
+    Icon star(Color color) => new Icon(Icons.star, color: color, size: 12.0);
 
     return new Container(
       padding: const EdgeInsets.fromLTRB(6.0, 15.0, 6.0, 6.0),
       decoration: BoxDecoration(
-          color: Theme.of(context).primaryColorDark,
-          borderRadius: const BorderRadius.all(Radius.circular(5.0))),
+        color: Theme.of(context).primaryColorDark,
+        borderRadius: const BorderRadius.all(Radius.circular(5.0)),
+      ),
       child: new Row(
         mainAxisAlignment: MainAxisAlignment.center,
         mainAxisSize: MainAxisSize.min,
         children: List.generate(
-            _startCount,
-            (i) => star(i == (_startCount - 1)
+          _startCount,
+          (i) => star(
+            i == (_startCount - 1)
                 ? context.colorScheme().secondary
-                : Theme.of(context).primaryColorLight)),
+                : Theme.of(context).primaryColorLight,
+          ),
+        ),
       ),
     );
   }
